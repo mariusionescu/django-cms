@@ -9,7 +9,6 @@ f.close()
 setup(
     name='django-cms',
     version='0.1',
-    package_dir={'django-cms': 'cms'},
     description='A very simple django CMS application.',
     author='Marius Ionescu',
     author_email='marius@appix.io',
