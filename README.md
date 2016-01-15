@@ -15,6 +15,8 @@ CONFIGURATION
 =============
 
     # urls.py:
+    
+    from django.conf.urls import include, url, patterns
     admin.site.site_header = 'CMS Admin'
 
     urlpatterns = [
