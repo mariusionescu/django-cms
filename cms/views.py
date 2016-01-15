@@ -18,12 +18,14 @@ class CMSView(View):
                 page = Page.objects.get(path=request.path)
             else:
                 page = Page.objects.get(path=request.path, published=True)
+            http_code = 200
         except Page.DoesNotExist:
-            if request.path == '/404/':
+            try:
+                page = Page.objects.get(path='/404/', published=True)
+            except Page.DoesNotExist:
                 raise Http404
             else:
-                return redirect('/404/')
-
+                http_code = 404
         context = {placeholder.name: placeholder.content for placeholder in page.placeholder_set.all()}
         context['path'] = request.path
 
@@ -33,7 +35,7 @@ class CMSView(View):
             else:
                 recent_posts = Post.objects.filter(published=True).order_by('-date_created')[:4]
             context['recent_posts'] = recent_posts
-        return render(request, page.template, context)
+        return render(request, page.template, context, status=http_code)
 
 
 
